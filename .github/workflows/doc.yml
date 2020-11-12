@@ -19,7 +19,6 @@ jobs:
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/ubuntu2004-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
       - name: Commit and push changes
         run: |
-          rm -rf doc
           mv ansible/doc docs
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
