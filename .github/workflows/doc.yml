@@ -19,11 +19,12 @@ jobs:
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/ubuntu2004-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
       - name: Commit and push changes
         run: |
-          mv ansible/doc doc
+          rm -rf doc
+          mv ansible/doc docs
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git checkout ${GITHUB_REF##*/}
-          git add -f doc/omeroweb-install-*
+          git add -f docs/omeroweb-install-*
           git commit -m 'Update from CI'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
