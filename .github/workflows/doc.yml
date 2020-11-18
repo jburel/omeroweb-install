@@ -23,4 +23,4 @@ jobs:
           user_email: '${{ github.actor }}@users.noreply.github.com'
           user_name: '${{ github.actor }}'
           commit_message: 'Update from CI'
-          destination_branch: 'update_doc'
+          destination_branch: 'develop'
