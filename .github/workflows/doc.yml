@@ -25,5 +25,5 @@ jobs:
           git checkout ${GITHUB_REF##*/}
           git add -f docs/omeroweb-install-*
           git commit -m 'Update from CI'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ome-documentation.git
           git push
