@@ -12,15 +12,9 @@ jobs:
       - name: Build doc
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-      - name: Commit and push the changes to ome-documentation
-        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source_file: 'ansible/doc/*.rst'
-          destination_repo: 'jburel/ome-documentation'
-          destination_folder: 'omero/sysadmins/unix/install-web/walkthrough'
-          user_email: '${{ github.actor }}@users.noreply.github.com'
-          user_name: '${{ github.actor }}'
-          commit_message: 'Update from CI'
-          destination_branch: 'develop'
+      - name: Create doc branch
+        run: |
+          curl -X POST https://api.github.com/repos/jburel/ome-documentation.git/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.API_TOKEN_GITHUB }} \
+          --data '{"event_type": "create_branch", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'", "branch_name": "test" }}' 
