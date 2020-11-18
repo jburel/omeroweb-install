@@ -12,6 +12,7 @@ jobs:
       - name: Build doc
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
+      - name: Commit and push the changes to ome-documentation
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
@@ -22,4 +23,4 @@ jobs:
           user_email: '${{ github.actor }}@users.noreply.github.com'
           user_name: '${{ github.actor }}'
           commit_message: 'Update from CI'
-          destination_branch_create: 'develop'
+          destination_branch: 'update_doc'
