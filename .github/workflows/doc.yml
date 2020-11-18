@@ -13,14 +13,14 @@ jobs:
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
       - name: Commit and push the changes to ome-documentation
-        uses: cpina/github-action-push-to-another-repository@master
+        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: 'ansible/doc'
-          destination-repository-name: 'jburel/ome-documentation'
+          source_file: 'ansible/doc/*.rst'
+          destination_repo: 'jburel/ome-documentation'
           destination_folder: 'omero/sysadmins/unix/install-web/walkthrough'
           user_email: '${{ github.actor }}@users.noreply.github.com'
-          destination-github-username:: '${{ github.actor }}'
+          user_name: '${{ github.actor }}'
           commit_message: 'Update from CI'
           destination_branch: 'develop'
