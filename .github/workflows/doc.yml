@@ -12,12 +12,6 @@ jobs:
       - name: Build doc
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-          ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos8-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-          ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/debian9-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-          ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/debian10-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-          ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/ubuntu1804-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-          ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/ubuntu2004-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-      - name: Commit and push the changes to ome-documentation
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
@@ -25,7 +19,7 @@ jobs:
           source_file: 'ansible/doc/*.rst'
           destination_repo: 'jburel/ome-documentation'
           destination_folder: 'omero/sysadmins/unix/install-web/walkthrough'
-          user_email: 'jburel'
-          user_name: 'j.burel@dundee.ac.uk'
+          user_email: '${{ github.actor }}@users.noreply.github.com'
+          user_name: '${{ github.actor }}'
           commit_message: 'Update from CI'
-          destination_branch_create: 'update_doc'
+          destination_branch_create: 'develop'
