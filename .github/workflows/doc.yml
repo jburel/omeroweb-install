@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build doc
-        run: |
-          ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
       - name: Set branch name
         run: echo "branch_name=doc_" + ${GITHUB_REF##*/}
       - name: Create doc branch
@@ -22,4 +19,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          branch: $branch_name
+          branch: '$branch_name'
+      - name: Build doc
+        run: |
+          ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Commit and push changes
+        run: |
+          mv ansible/doc docs
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git checkout $branch_name
+          git add -f docs/omeroweb-install-*
+          git commit -m 'Update from CI'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push
