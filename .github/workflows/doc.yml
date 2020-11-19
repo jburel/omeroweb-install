@@ -52,3 +52,5 @@ jobs:
           echo "Pull request number from environment: ${PULL_REQUEST_NUMBER}"
           echo "Pull request url from environment: ${PULL_REQUEST_URL}"
           echo "Another way to specify from output ${{ steps.pull_request.outputs.pull_request_number }}"
+          echo "Pull request reviewers: ${REVIEWERS_RETURN_CODE}"
+
