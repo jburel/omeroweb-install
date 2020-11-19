@@ -43,6 +43,10 @@ jobs:
           branch: ${{ env.branch_name }}
           title: 'Update doc'
           base: master
+          assignees: ${{ github.actor }}
+          reviewers: ${{ github.actor }}
+          body: |
+            matching doc changes from ${GITHUB_REF##*/}
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
