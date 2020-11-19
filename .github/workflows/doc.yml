@@ -39,3 +39,4 @@ jobs:
         with:
           delete_branch: true
           branch: ${{ env.branch_name }}
+          base: master
