@@ -41,7 +41,6 @@ jobs:
           PULL_REQUEST_FROM_BRANCH: ${{ env.branch_name }}
           PASS_IF_EXISTS: true
           PASS_ON_ERROR: true
-          PULL_REQUEST_REVIEWERS: ${{ github.actor }}
       - name: Test outputs
         env:
           pull_request_number_output: ${{ steps.pull_request.outputs.pull_request_number }}
@@ -52,5 +51,4 @@ jobs:
           echo "Pull request number from environment: ${PULL_REQUEST_NUMBER}"
           echo "Pull request url from environment: ${PULL_REQUEST_URL}"
           echo "Another way to specify from output ${{ steps.pull_request.outputs.pull_request_number }}"
-          echo "Pull request reviewers: ${REVIEWERS_RETURN_CODE}"
 
