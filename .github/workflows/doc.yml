@@ -49,7 +49,7 @@ jobs:
           reviewers: ${{ github.actor }}
           body: |
             matching doc changes from
-            [${{ env.original_branch_name }}](https://github.com/${{ github.repository }}/${{ env.original_branch_name }})
+            [${{ env.original_branch_name }}](https://github.com/${{ github.repository }}/tree/${{ env.original_branch_name }})
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
