@@ -34,17 +34,15 @@ jobs:
           git commit -m 'Update from CI'
           #git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           #git push
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.branch_name }}
       - name: Open Pull request
-        uses: gha-utilities/init-pull-request
+        uses: gpeter-evans/create-pull-request@v3
         with:
-          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Update doc
           committer: GitHub <noreply@github.com>
-          head: ${{ env.branch_name }}
-          base: master
+          branch: ${{ env.branch_name }}
           title: 'Update doc'
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
