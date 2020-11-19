@@ -34,8 +34,10 @@ jobs:
           git commit -m 'Update from CI'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          delete-branch: true
-          base: master
+      - name: pull-request-action
+        uses: vsoch/pull-request-action@1.0.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_PREFIX: ${{github.sha}}
+          PASS_IF_EXISTS: true
+          PASS_ON_ERROR: true
