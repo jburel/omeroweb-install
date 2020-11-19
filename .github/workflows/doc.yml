@@ -28,7 +28,7 @@ jobs:
           mv ansible/doc docs
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git pull ${{ github.repository }} ${{ env.branch_name }}
+          git pull origin ${{ env.branch_name }}
           git checkout ${{ env.branch_name }}
           git add -f docs/omeroweb-install-*
           git commit -m 'Update from CI'
