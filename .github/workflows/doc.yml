@@ -15,9 +15,11 @@ jobs:
       - name: Build doc
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
+      - name: Set branch name
+        run: echo "branch_name=doc_" + ${GITHUB_REF##*/}
       - name: Create doc branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          branch: 'doc_' + ${GITHUB_REF##*/}
+          branch: $branch_name
