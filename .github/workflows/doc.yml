@@ -32,15 +32,19 @@ jobs:
           git checkout ${{ env.branch_name }}
           git add -f docs/omeroweb-install-*
           git commit -m 'Update from CI'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git push
+          #git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          #git push
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.branch_name }}
       - name: Open Pull request
-        uses: peter-evans/create-pull-request@v3
-        env:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: gha-utilities/init-pull-request@v0.2.0
+        with:
+          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Update doc
           committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: false
-          branch: ${{ env.branch_name }}
+          head: ${{ env.branch_name }}
+          base: master
           title: 'Update doc'
