@@ -23,7 +23,7 @@ jobs:
       - name: Build doc
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
-      - name: Commit and push changes
+      - name: Commit and push changes to the newly created branch
         run: |
           mv ansible/doc docs
           git config user.name "${{ github.actor }}"
@@ -34,3 +34,9 @@ jobs:
           git commit -m 'Update from CI'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
+      - name: pull-request-action
+        uses: vsoch/pull-request-action@1.0.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST_BRANCH: "master"
+          PULL_REQUEST_FROM_BRANCH: ${{ env.branch_name }}
