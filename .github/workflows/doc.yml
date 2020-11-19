@@ -20,6 +20,8 @@ jobs:
           branch: ${{ env.branch_name }}
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Build doc
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
@@ -28,6 +30,7 @@ jobs:
           mv ansible/doc docs
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git pull ${{ github.repository }}
           git checkout ${{ env.branch_name }}
           git add -f docs/omeroweb-install-*
           git commit -m 'Update from CI'
