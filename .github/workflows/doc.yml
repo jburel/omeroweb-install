@@ -38,6 +38,6 @@ jobs:
         uses: vsoch/pull-request-action@1.0.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_PREFIX: ${{github.sha}}
+          PULL_REQUEST_FROM_BRANCH: ${{ env.branch_name }}
           PASS_IF_EXISTS: true
           PASS_ON_ERROR: true
