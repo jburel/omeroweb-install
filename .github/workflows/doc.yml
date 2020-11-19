@@ -42,6 +42,7 @@ jobs:
           committer: GitHub <noreply@github.com>
           branch: ${{ env.branch_name }}
           title: 'Update doc'
+          base: master
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
