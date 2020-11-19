@@ -37,6 +37,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          delete_branch: true
-          branch: ${{ env.branch_name }}
+          delete-branch: true
           base: master
+          push-to-fork: ${{ github.actor }}/${{ github.repository }}
