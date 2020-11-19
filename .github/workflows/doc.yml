@@ -13,7 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set branch name
-        run: echo "branch_name="${{github.sha}}${GITHUB_REF##*/} >> $GITHUB_ENV
+        run: |
+          echo "branch_name="${{github.sha}}${GITHUB_REF##*/} >> $GITHUB_ENV
+          echo "original_branch_name="${GITHUB_REF##*/} >> $GITHUB_ENV
       - name: Create doc branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
@@ -46,7 +48,8 @@ jobs:
           assignees: ${{ github.actor }}
           reviewers: ${{ github.actor }}
           body: |
-            matching doc changes from ${GITHUB_REF##*/}
+            matching doc changes from
+            [${{ original_branch_name }}](https://github.com/${{ github.repository }}/${{ original_branch_name }})
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
