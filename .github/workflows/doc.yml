@@ -34,10 +34,21 @@ jobs:
           git commit -m 'Update from CI'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
-      - name: pull-request-action
+      - name: Open Pull request
         uses: vsoch/pull-request-action@1.0.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PULL_REQUEST_FROM_BRANCH: ${{ env.branch_name }}
           PASS_IF_EXISTS: true
           PASS_ON_ERROR: true
+          PULL_REQUEST_REVIEWERS: ${{ github.actor }}
+      - name: Test outputs
+        env:
+          pull_request_number_output: ${{ steps.pull_request.outputs.pull_request_number }}
+          pull_request_url_output: ${{ steps.pull_request.outputs.pull_request_url }}
+        run: |
+          echo "Pull request number from output: ${pull_request_number_output}"
+          echo "Pull request url from output: ${pull_request_url_output}"
+          echo "Pull request number from environment: ${PULL_REQUEST_NUMBER}"
+          echo "Pull request url from environment: ${PULL_REQUEST_URL}"
+          echo "Another way to specify from output ${{ steps.pull_request.outputs.pull_request_number }}"
