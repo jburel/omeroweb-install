@@ -39,4 +39,3 @@ jobs:
         with:
           delete-branch: true
           base: master
-          push-to-fork: ${{ github.actor }}/${{ github.repository }}
