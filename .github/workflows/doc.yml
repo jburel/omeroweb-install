@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set branch name
-        run: echo "branch_name=doc_"+${GITHUB_REF##*/} >> $GITHUB_ENV
+        run: echo "branch_name=doc_"${GITHUB_REF##*/} >> $GITHUB_ENV
       - name: Create doc branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
