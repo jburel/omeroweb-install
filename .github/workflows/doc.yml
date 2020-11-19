@@ -16,9 +16,8 @@ jobs:
         run: |
           ansible-playbook ./ansible/omeroweb-install-doc.yml -i ./ansible/hosts/centos7-ice3.6 --extra-vars '{"clean": True, "web_session": True}'
       - name: Create doc branch
-        run: |
-          curl -XPOST -u "${{ secrets.API_TOKEN_GITHUB }}" \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H "Content-Type: application/json" \
-          https://api.github.com/repos/jburel/ome-documentation.git/dispatches \
-          --data '{"event_type": "create_branch", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'", "branch_name": "test" }}' 
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'doc_' + ${GITHUB_REF##*/}
